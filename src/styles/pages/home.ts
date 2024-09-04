@@ -3,7 +3,7 @@ import { styled } from ".."
 
 export const HomeContainer = styled('main', {
   width: '100%',
-  maxWidth: 'calc(100vw - (100vw - 1168px))',
+  maxWidth: 1168,
   minHeight: 656,
   display: 'flex',
   overflow: 'initial !important',
