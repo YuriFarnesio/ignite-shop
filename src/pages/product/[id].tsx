@@ -2,6 +2,7 @@ import { stripe } from "@/lib/stripe"
 import { ImageContainer, ProductContainer, ProductDetails } from "@/styles/pages/product"
 import axios from "axios"
 import { GetStaticPaths, GetStaticProps } from "next"
+import Head from "next/head"
 import Image from "next/image"
 import { useState } from "react"
 import Stripe from "stripe"
@@ -39,21 +40,27 @@ export default function Product({ product }: ProductProps) {
   }
 
   return (
-    <ProductContainer>
-      <ImageContainer>
-        <Image width={520} height={480} src={product.imageUrl} alt="" />
-      </ImageContainer>
+    <>
+      <Head>
+        <title>{product.name} | Ignite Shop</title>
+      </Head>
 
-      <ProductDetails>
-        <h1>{product.name}</h1>
-        <span>{product.price}</span>
-        <p>{product.description}</p>
+      <ProductContainer>
+        <ImageContainer>
+          <Image width={520} height={480} src={product.imageUrl} alt="" />
+        </ImageContainer>
 
-        <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
-          Comprar agora
-        </button>
-      </ProductDetails>
-    </ProductContainer>
+        <ProductDetails>
+          <h1>{product.name}</h1>
+          <span>{product.price}</span>
+          <p>{product.description}</p>
+
+          <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
+            Comprar agora
+          </button>
+        </ProductDetails>
+      </ProductContainer>
+    </>
   )
 }
 
@@ -71,7 +78,10 @@ export const getStaticProps: GetStaticProps<any, { id: string }> = async ({ para
 
   if (!productId) {
     return {
-      notFound: true
+      redirect: {
+        destination: '/',
+        permanent: false,
+      }
     }
   }
 
