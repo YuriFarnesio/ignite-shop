@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { styled } from ".."
 
 export const HomeContainer = styled('main', {
@@ -9,7 +10,7 @@ export const HomeContainer = styled('main', {
   margin: '0 auto',
 })
 
-export const ProductContainer = styled('a', {
+export const ProductContainer = styled('div', {
   borderRadius: 8,
   padding: '0 3rem 0 0',
 
@@ -18,7 +19,7 @@ export const ProductContainer = styled('a', {
   },
 })
 
-export const Product = styled('div', {
+export const Product = styled(Link, {
   width: '100%',
   height: '100%',
 
@@ -58,6 +59,7 @@ export const Product = styled('div', {
 
     strong: {
       fontSize: '$lg',
+      color: '$gray100',
       lineHeight: 1.6
     },
 
