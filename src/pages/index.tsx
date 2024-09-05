@@ -1,23 +1,24 @@
 import { stripe } from '@/lib/stripe'
 import { HomeContainer, Product, ProductContainer } from '@/styles/pages/home'
+import { TProduct } from '@/types/products'
+import { Handbag } from '@phosphor-icons/react'
 import { useKeenSlider } from 'keen-slider/react'
 import { GetStaticProps } from 'next'
+import Head from 'next/head'
 import Image from 'next/image'
+import { MouseEvent } from 'react'
+import Stripe from 'stripe'
+import { useShoppingCart } from 'use-shopping-cart'
 
 import 'keen-slider/keen-slider.min.css'
-import Head from 'next/head'
-import Stripe from 'stripe'
 
 interface HomeProps {
-  products: {
-    id: string;
-    name: string;
-    imageUrl: string;
-    price: string
-  }[]
+  products: TProduct[]
 }
 
 export default function Home({ products }: HomeProps) {
+  const { addItem } = useShoppingCart()
+
   const [sliderRef] = useKeenSlider({
     slides: () => products.map((_, i) => {
       return {
@@ -26,6 +27,11 @@ export default function Home({ products }: HomeProps) {
       }
     }),
   })
+
+  const handleAddToBag = (event: MouseEvent, product: TProduct) => {
+    event.preventDefault()
+    addItem(product)
+  }
 
   return (
     <>
@@ -40,8 +46,21 @@ export default function Home({ products }: HomeProps) {
               <Image src={product.imageUrl} width={520} height={480} alt="" />
 
               <footer>
-                <strong>{product.name}</strong>
-                <span>{product.price}</span>
+                <div>
+                  <strong>{product.name}</strong>
+                  <span>
+                    {
+                      new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL',
+                      }).format(product.price / 100)
+                    }
+                  </span>
+                </div>
+
+                <button onClick={(e) => handleAddToBag(e, product)}>
+                  <Handbag />
+                </button>
               </footer>
             </Product>
           </ProductContainer>
@@ -61,12 +80,13 @@ export const getStaticProps: GetStaticProps = async () => {
 
     return {
       id: product.id,
+      sku: product.id,
       name: product.name,
+      description: product.description,
       imageUrl: product.images[0],
-      price: new Intl.NumberFormat('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-      }).format(price.unit_amount as number / 100)
+      defaultPriceId: price.id,
+      price: price.unit_amount as number,
+      currency: 'BRL'
     }
   })
 

@@ -42,6 +42,7 @@ export const Product = styled(Link, {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    gap: '0.5rem',
 
     position: 'absolute',
     bottom: '0.25rem',
@@ -69,6 +70,37 @@ export const Product = styled(Link, {
       lineHeight: 1.4,
       color: '$green300'
     },
+
+    div: {
+      width: '100%',
+
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '0.25rem'
+    },
+
+    button: {
+      width: '3.5rem',
+      height: '3.5rem',
+
+      backgroundColor: '$green500',
+      border: 0,
+      borderRadius: 8,
+      cursor: 'pointer',
+      padding: '0.75rem',
+      transition: 'all 0.2s ease-in-out',
+
+      '& svg': {
+        width: '2rem',
+        height: '2rem',
+        color: '$white',
+      },
+
+      '&:hover': {
+        scale: 1.025,
+        backgroundColor: '$green300',
+      }
+    }
   },
 
   '&:hover': {

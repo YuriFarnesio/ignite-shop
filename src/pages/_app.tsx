@@ -1,22 +1,29 @@
-import { CarouselShadow, Container, Header } from '@/styles/app'
+import BagDrawer from '@/components/bag-drawer'
+import Header from '@/components/header'
+import { CarouselShadow, Container } from '@/styles/app'
 import { globalStyles } from '@/styles/global'
 import type { AppProps } from 'next/app'
-import Image from 'next/image'
-
-import logoImg from "../assets/logo.svg"
+import { CartProvider } from 'use-shopping-cart'
 
 globalStyles()
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Container>
-      <CarouselShadow side='left' />
-      <Header>
-        <Image src={logoImg} alt="" />
-      </Header>
+    <CartProvider
+      cartMode="checkout-session"
+      currency="BRL"
+      stripe={process.env.STRIPE_PUBLIC_KEY as string}
+      shouldPersist
+    >
+      <Container>
+        <CarouselShadow side='left' />
 
-      <Component {...pageProps} />
-      <CarouselShadow side='right' />
-    </Container>
+        <Header />
+        <BagDrawer />
+        <Component {...pageProps} />
+
+        <CarouselShadow side='right' />
+      </Container>
+    </CartProvider>
   )
 }

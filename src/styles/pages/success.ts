@@ -52,7 +52,6 @@ export const ImageContainer = styled('div', {
   padding: '0.25rem',
   marginTop: '4rem',
 
-
   img: {
     objectFit: 'cover',
   }

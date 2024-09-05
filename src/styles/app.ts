@@ -3,18 +3,14 @@ import { styled } from "."
 
 export const Container = styled('div', {
   minHeight: '100vh',
+
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'flex-start',
   justifyContent: 'flex-start',
-  overflow: 'hidden',
-})
 
-export const Header = styled('header', {
-  width: '100%',
-  maxWidth: 1168,
-  padding: '2.5rem 0 2rem',
-  margin: '0 auto',
+  position: 'relative',
+  overflow: 'hidden',
 })
 
 export const CarouselShadow = styled('div', {
